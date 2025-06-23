@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<head>
+ <meta charset="utf-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <link rel="stylesheet" href="../test_output/styles.css">
+</head>
+<body>
+
+<h2 class= "Bold FontSize2">
+    Markdown to HTML converter
+</h2>
+<p>
+    
+    <h3 class= "Bold FontSize3">
+        Specification
+    </h3>
+    This project is aimed at creating a markdown to HTML converter. If you are unsureabout the Markdown standard, go 
+    <a href="https://www.markdownguide.org/cheat-sheet/" title="">here</a>
+    . Supported markdown syntax includes:
+    <ul>
+        <li>
+            headings of all sizes
+        </li>
+        <li>
+            italic and bold text
+        </li>
+        <li>
+            blockquotes (not nested)
+        </li>
+        <li>
+            numbered and regular lists
+        </li>
+        <li>
+            code blocks (both inline and on mutiple lines)
+        </li>
+        <li>
+            horizontal separation line
+        </li>
+        <li>
+            hyperlinks
+        </li>
+        <li>
+            images
+        </li>
+        <li>
+            escaping with 
+            <code class= "Inline">
+                \
+            </code>
+            
+        </li>
+        <li>
+            tables (alignment not supported)
+        </li>
+    </ul>
+    The output of this program are two files: an HTML file and a linked CSS file. 
+    <h3 class= "Bold FontSize3">
+        Usage
+    </h3>
+    You can 
+    <code class= "Inline">
+        git clone
+    </code>
+     this repository and create the program in two ways:Find 
+    <code class= "Inline">
+        build.sh
+    </code>
+     in the root directory and run it:
+    <code class= "Block"><pre>
+        
+./build.sh
+
+    </pre></code>
+    Or use 
+    <code class= "Inline">
+        CMakeLists.txt
+    </code>
+     by calling 
+    <code class= "Inline">
+        cmake *path-to-the-src-directory*
+    </code>
+    . E.g. if your newly created directory were on the same level as 
+    <code class= "Inline">
+        /src
+    </code>
+    , then you would call 
+    <code class= "Inline">
+        cmake ../src
+    </code>
+     from it. A 
+    <code class= "Inline">
+        Makefile
+    </code>
+     will then appear in your directory, call with with 
+    <code class= "Inline">
+        make
+    </code>
+    .Now you have the executable. Call it (let's name the executable 
+    <code class= "Inline">
+        markdown_converter
+    </code>
+     in accordance with 
+    <code class= "Inline">
+        CMakeLists.txt
+    </code>
+    ) with these arguments.
+    <code class= "Block"><pre>
+        
+./markdown_converter -i ../test_files/test_file.md -o ../test_files/test_file.html -s ../test_files/styles.css
+
+    </pre></code>
+    New HTML and CSS files should appear in your 
+    <code class= "Inline">
+        test_files
+    </code>
+     directory. Of course, depending on where you call the command from, the relative paths in the command change.The program accepts four arguments:
+    <ul>
+        <li>
+            <code class= "Inline">
+                -i *input-file-path*
+            </code>
+             - a 
+            <span class= "Bold">
+                required
+            </span>
+             argument for the input markdown file to be converted
+        </li>
+        <li>
+            <code class= "Inline">
+                -o *output-file-path*
+            </code>
+             - the name of the output HTML file (defaults to 
+            <code class= "Inline">
+                output.html
+            </code>
+             if none provided)
+        </li>
+        <li>
+            <code class= "Inline">
+                -s *styles-file-path*
+            </code>
+             - the name of the styles file (defaults to 
+            <code class= "Inline">
+                styles.css
+            </code>
+             if none provided)
+        </li>
+        <li>
+            <code class= "Inline">
+                -v *{1, 2, 3}*
+            </code>
+             - the verbosity of a logger. The logger provides logs to a 
+            <code class= "Inline">
+                logs.log
+            </code>
+             file created in the directory of the executable. If 
+            <code class= "Inline">
+                -v
+            </code>
+             flag is passed, it has to provide a value, simply passing 
+            <code class= "Inline">
+                -v
+            </code>
+             will result in an error. Value 
+            <code class= "Inline">
+                1
+            </code>
+             logs only 
+            <span class= "Italic">
+                error-level
+            </span>
+             logs, 
+            <code class= "Inline">
+                2
+            </code>
+             adds 
+            <span class= "Italic">
+                warnings
+            </span>
+            , 
+            <code class= "Inline">
+                3
+            </code>
+             adds 
+            <span class= "Italic">
+                info
+            </span>
+            . Use this for debugging or if interested in the inner workings. If not used, no logging is done.
+        </li>
+    </ul>
+    The argument and its value can be written separately: 
+    <code class= "Inline">
+        -i some-path
+    </code>
+     or together 
+    <code class= "Inline">
+        -isomepath
+    </code>
+    .You can try to run the program on provided example input files in 
+    <code class= "Inline">
+        test_files
+    </code>
+     directory.
+    <h3 class= "Bold FontSize3">
+        Quirks
+    </h3>
+    If you use list indentation (a list inside a list), use 
+    <span class= "Bold">
+        4 spaces
+    </span>
+     or a 
+    <span class= "Bold">
+        tab
+    </span>
+    . This is in accordance with the Markdown guide (some other parsers would allow for some other combination, this one does not). If you're using tabs, make sure youreditor does not change its value to a preset amount of spaces.Futhermore, if you wish to employ indented listing, do not put any empty lines between the indented list elements:
+    <code class= "Block"><pre>
+        
+DO:
+
+- Base level
+	- Indented level
+
+DON'T:
+
+- Base level
+
+	- Indented level
+
+    </pre></code>
+    Tables have to start and end their rows with pipe symbols 
+    <code class= "Inline">
+        |
+    </code>
+    . A table header is separated by 3 or more dashes from the body. E.g.
+    <code class= "Block"><pre>
+        
+| Header 1 | Header 2 |
+|---|----------|
+| Row 1    | Row 2|
+
+    </pre></code>
+    
+    <h3 class= "Bold FontSize3">
+        Code structure
+    </h3>
+    The program is made up of three parts:
+    <ol>
+        <li>
+            <span class= "Italic">
+                markdown parsing
+            </span>
+            : a markdown parser parses the input document and emits tokens to a connected tree builder
+        </li>
+        <li>
+            <span class= "Italic">
+                tree building
+            </span>
+            : the tree builder catches tokens and creates and changes its parsing tree
+        </li>
+        <li>
+            <span class= "Italic">
+                html construction
+            </span>
+            : after all tokens have been emitted and the tree is built, an HTML constructor creates an HTML
+        </li>
+    </ol>
+    and a CSS file based on the provided parsing tree.
+    <h4 class= "Bold FontSize4">
+        Markdown parsing
+    </h4>
+    The Markdown Parsing phase is responsible for reading the input Markdown file and converting it into a series of tokens. These tokens represent the structural elements of the Markdown document, such as headings, paragraphs, lists, tables, and more.
+    <span class= "Bold Italic">
+        How it works
+    </span>
+    :
+    <ol>
+        <li>
+            The 
+            <code class= "Inline">
+                Md_Parser
+            </code>
+             class reads the Markdown file character by character.
+        </li>
+        <li>
+            It uses a state machine to determine the current context (e.g., parsing a heading, list, or table).
+        </li>
+        <li>
+            Tokens are emitted using the 
+            <code class= "Inline">
+                Token_Emitter
+            </code>
+             class, which connects the parser to the tree builder.
+        </li>
+        <li>
+            Special cases like escape sequences (
+            <code class= "Inline">
+                \
+            </code>
+            ), inline code, and block-level elements (e.g., blockquotes, tables) are handled explicitly.
+        </li>
+        <li>
+            Tables are parsed with support for rows starting and ending with a pipe (
+            <code class= "Inline">
+                |
+            </code>
+            ) symbol. While attempting to parse a table, a completely new, separate tree is being constructed. If table parsing is successful, this tree gets appended to the overarching tree. Otherwise, the tree gets boiled down into a simple content token.
+        </li>
+    </ol>
+    
+    <h4 class= "Bold FontSize4">
+        Tree building
+    </h4>
+    The Tree Building phase constructs a hierarchical representation of the Markdown document based on the tokens emitted by the parser. This phase uses the TreeBuilder class to build a parsing tree.
+    <span class= "Bold Italic">
+        How it works
+    </span>
+    :
+    <ol>
+        <li>
+            The 
+            <code class= "Inline">
+                TreeBuilder
+            </code>
+             class receives tokens from the 
+            <code class= "Inline">
+                Token_Emitter
+            </code>
+            .
+        </li>
+        <li>
+            It creates nodes (
+            <code class= "Inline">
+                Node
+            </code>
+            , 
+            <code class= "Inline">
+                ContentNode
+            </code>
+            , 
+            <code class= "Inline">
+                ImageNode
+            </code>
+            , etc.) for each token and organizes them into a tree structure.
+        </li>
+        <li>
+            The tree structure represents the logical hierarchy of the document (e.g., headings contain paragraphs, lists contain list items).
+        </li>
+        <li>
+            <code class= "Inline">
+                Attributes
+            </code>
+             (e.g., bold, italic, blockquote) are added to nodes as needed.
+        </li>
+        <li>
+            Subtrees (e.g., tables) can be appended using helper classes like 
+            <code class= "Inline">
+                TableManager
+            </code>
+            .
+        </li>
+    </ol>
+    
+    <span class= "Bold Italic">
+        Example
+    </span>
+    : 
+    <code class= "Block"><pre>
+        
+# Heading 1
+
+This is a paragraph.
+
+- List item 1
+- List item 2
+
+    </pre></code>
+    
+    <code class= "Block"><pre>
+        
+DOCSTART
+├── Header_1
+│   └── Content: "Heading 1"
+├── Paragraph
+│   └── Content: "This is a paragraph."
+└── List_Unordered
+    ├── List_Element
+    │   └── Content: "List item 1"
+    └── List_Element
+        └── Content: "List item 2"
+
+    </pre></code>
+    
+    <h4 class= "Bold FontSize4">
+        HTML construction
+    </h4>
+    The HTML Construction phase generates the final HTML and CSS files from the parsing tree. This phase uses the 
+    <code class= "Inline">
+        HTML_Builder
+    </code>
+     and 
+    <code class= "Inline">
+        CSS_Constructor
+    </code>
+     classes.
+    <span class= "Bold Italic">
+        How it works
+    </span>
+    :
+    <ol>
+        <li>
+            The 
+            <code class= "Inline">
+                HTML_Builder
+            </code>
+             traverses the parsing tree using the 
+            <code class= "Inline">
+                HTML_Visitor
+            </code>
+             class.
+        </li>
+        <li>
+            For each node, it generates the corresponding HTML tags and writes them to the output file.
+        </li>
+        <li>
+            The 
+            <code class= "Inline">
+                CSS_Constructor
+            </code>
+             generates a default CSS file and adds styles for attributes like bold, italic, and table formatting.
+        </li>
+        <li>
+            Special elements like tables and blockquotes are styled using predefined CSS classes.
+        </li>
+    </ol>
+    
+    <h3 class= "Bold FontSize3">
+        Example
+    </h3>
+    Example document are provided in the 
+    <code class= "Inline">
+        test_files
+    </code>
+     directory. If you try to convert the 
+    <code class= "Inline">
+        complex_table.md
+    </code>
+     file, you will get.
+    <code class= "Block"><pre>
+        
+user@PC:...path/build$ ./markdown_converter -i ../test_files/complex_table.md 
+
+Output file not specified. Defaulting to output.html
+Styles file not specified. Defaulting to styles.css
+Your HTML document has been built successfully!
+
+    </pre></code>
+    If you had run it with the 
+    <code class= "Inline">
+        -v
+    </code>
+     set to 2 or higher, you would also get these warnings in your log file.
+    <code class= "Block"><pre>
+        
+WARNING at Thu May  1 19:24:35 2025
+: line 1: Unclosed asterisk signifying bold text - converting to plain text
+WARNING at Thu May  1 19:24:35 2025
+: line 1: Unclosed backtick signifying a code element: handling as plain text
+WARNING at Thu May  1 19:24:35 2025
+: line 3: Unclosed asterisk signifying bold text - converting to plain text
+WARNING at Thu May  1 19:24:35 2025
+: line 4: Unclosed asterisk signifying bold text - converting to plain text
+WARNING at Thu May  1 19:24:35 2025
+: line 5: Unclosed asterisk signifying bold text - converting to plain text
+
+    </pre></code>
+    That's by design to show you the converter will warn you if it finds incorrect syntax and defaults to something reasonable.
+</p>
+
+</body>

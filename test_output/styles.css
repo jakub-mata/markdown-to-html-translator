@@ -1,0 +1,25 @@
+body {
+margin: 2rem auto;
+width: 80%;
+}
+.Bold {
+font-weight: bold;
+}
+.FontSize2 {
+font-size: 24px;
+}
+.FontSize3 {
+font-size: 20.8px;
+}
+.Inline {
+display: inline;
+}
+.Block {
+display: block;
+}
+.Italic {
+font-style: italic;
+}
+.FontSize4 {
+font-size: 16px;
+}

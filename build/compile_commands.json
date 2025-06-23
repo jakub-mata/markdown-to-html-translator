@@ -1,0 +1,7 @@
+[
+{
+  "directory": "/home/jakub/Documents/uk/cpp/mataj/project/build",
+  "command": "/usr/bin/g++  -I/home/jakub/Documents/uk/cpp/mataj/project/src -I/home/jakub/Documents/uk/cpp/mataj/project/src/parsing -I/home/jakub/Documents/uk/cpp/mataj/project/src/parsing_tree -I/home/jakub/Documents/uk/cpp/mataj/project/src/building -g -std=gnu++17 -o CMakeFiles/markdown_converter.dir/main.cpp.o -c /home/jakub/Documents/uk/cpp/mataj/project/src/main.cpp",
+  "file": "/home/jakub/Documents/uk/cpp/mataj/project/src/main.cpp"
+}
+]

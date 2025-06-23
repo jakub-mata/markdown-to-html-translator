@@ -1,0 +1,3 @@
+/home/jakub/Documents/uk/cpp/mataj/project/build/CMakeFiles/markdown_converter.dir
+/home/jakub/Documents/uk/cpp/mataj/project/build/CMakeFiles/edit_cache.dir
+/home/jakub/Documents/uk/cpp/mataj/project/build/CMakeFiles/rebuild_cache.dir
